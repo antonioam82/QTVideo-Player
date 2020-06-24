@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
                              QVBoxLayout)
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-# Ruta del archivo.
+
 VIDEO_PATH = ""#"wild pogo mv.avi"#"city night lights.avi"#"video.avi" # vnideo.avi"
 class MainWindow(QMainWindow):
     
