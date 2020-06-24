@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
-VIDEO_PATH = "wild pogo mv.avi"#"city night lights.avi"#"video.avi" # vnideo.avi"
+VIDEO_PATH = "" #"wild pogo mv.avi"#"city night lights.avi"#"video.avi" # vnideo.avi"
 class MainWindow(QMainWindow):
     
     def __init__(self):
