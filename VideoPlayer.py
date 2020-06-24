@@ -9,49 +9,85 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
-class VideoPlayer(QMainWindow):
-    def __init__(self, parent=None):
+VIDEO_PATH = "wild pogo mv.avi"#"city night lights.avi"#"video.avi" # vnideo.avi"
+class MainWindow(QMainWindow):
+    
+    def __init__(self):
+        super().__init__()
         
-        super(VideoPlayer, self).__init__(parent)
-
-        openButton = QPushButton("Buscar...")
-        #openButton.clicked.connect(self.openFile)
-
-        self.playButton = QPushButton()
-        self.playButton.setEnabled(False)
-        #self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
-        #self.playButton.clicked.connect(self.play)
-
-        self.positionSlider = QSlider(Qt.Horizontal)
-        self.positionSlider.setRange(0, 0)
-        #self.positionSlider.sliderMoved.connect(self.setPosition)
-
-        controlLayout = QHBoxLayout()
-        controlLayout.setContentsMargins(0, 0, 0, 0)
-        controlLayout.addWidget(openButton)
-        controlLayout.addWidget(self.playButton)
-        controlLayout.addWidget(self.positionSlider)
-
-        videoWidget = QVideoWidget()
-
-        layout = QVBoxLayout()
-        layout.addWidget(videoWidget)
-        layout.addLayout(controlLayout)
-
-        self.setLayout(layout)
+        # Controles principales para organizar la ventana.
+        self.widget = QWidget(self)
+        self.layout = QVBoxLayout()
+        self.bottom_layout = QHBoxLayout()
         
-        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        self.mediaPlayer.setVideoOutput(videoWidget)
-        #self.mediaPlayer.stateChanged.connect(self.mediaStateChanged)
-        #self.mediaPlayer.positionChanged.connect(self.positionChanged)
-        #self.mediaPlayer.durationChanged.connect(self.durationChanged)
+        self.video_widget = QVideoWidget(self)
+        self.media_player = QMediaPlayer()
+        self.media_player.setMedia(
+            QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
+        self.media_player.setVideoOutput(self.video_widget)
+        
+        self.play_button = QPushButton("Pausa", self)
+        self.stop_button = QPushButton("Detener", self)
 
+        self.seek_slider = QSlider(Qt.Horizontal)
+        self.volume_slider = QSlider(Qt.Horizontal)
+        self.volume_slider.setRange(0, 100)
+        self.volume_slider.setValue(self.media_player.volume())
+        self.seek_slider.sliderMoved.connect(self.media_player.setPosition)
+        self.volume_slider.sliderMoved.connect(self.media_player.setVolume)
+        self.media_player.positionChanged.connect(self.seek_slider.setValue)
+        self.media_player.durationChanged.connect(
+            partial(self.seek_slider.setRange, 0))
 
-
-
-
+        self.layout.addWidget(self.video_widget)
+        self.layout.addLayout(self.bottom_layout)
+        self.bottom_layout.addWidget(self.play_button)
+        self.bottom_layout.addWidget(self.stop_button)
+        self.bottom_layout.addWidget(self.volume_slider)
+        self.layout.addWidget(self.seek_slider)
+        
+        # Conectar los eventos con sus correspondientes funciones.
+        self.play_button.clicked.connect(self.play_clicked)
+        self.stop_button.clicked.connect(self.stop_clicked)
+        self.media_player.stateChanged.connect(self.state_changed)
+        
+        self.video_widget.installEventFilter(self)
+        
+        self.setWindowTitle("Reproductor de video")
+        self.resize(800, 600)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.bottom_layout.setContentsMargins(0, 0, 0, 0)
+        self.widget.setLayout(self.layout)
+        self.setCentralWidget(self.widget)
+        
+        self.media_player.play()
+    
+    def play_clicked(self):
+        if (self.media_player.state() in
+            (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
+            self.media_player.play()
+        else:
+            self.media_player.pause()
+    
+    def stop_clicked(self):
+        self.media_player.stop()
+    
+    def state_changed(self, newstate):
+        states = {
+            QMediaPlayer.PausedState: "Resumir",
+            QMediaPlayer.PlayingState: "Pausa",
+            QMediaPlayer.StoppedState: "Reproducir"
+        }
+        self.play_button.setText(states[newstate])
+        self.stop_button.setEnabled(newstate != QMediaPlayer.StoppedState)
+    
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.MouseButtonDblClick:
+            obj.setFullScreen(not obj.isFullScreen())
+        return False
+    
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = VideoPlayer()
+    window = MainWindow()
     window.show()
     sys.exit(app.exec_())
