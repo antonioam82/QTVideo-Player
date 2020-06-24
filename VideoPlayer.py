@@ -116,8 +116,10 @@ class MainWindow(QMainWindow):
         print("Done")
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')#QDir.homePath())
         if fileName != '':
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
+            print("oK")
+            #self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_button.setEnabled(True)
+            self.stop_button.setEnabled(True)
     
 if __name__ == "__main__":
     app = QApplication(sys.argv)
