@@ -10,20 +10,43 @@ from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
 class VideoPlayer(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
         
-        self.widget = QWidget(self)
-        self.layout = QVBoxLayout()
-        self.bottom_layout = QHBoxLayout()
+        super(VideoPlayer, self).__init__(parent)
 
-        self.setWindowTitle("Reproductor de video")
-        self.resize(800, 600)
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.bottom_layout.setContentsMargins(0, 0, 0, 0)
-        self.widget.setLayout(self.layout)
-        self.setCentralWidget(self.widget)
+        openButton = QPushButton("Buscar...")
+        #openButton.clicked.connect(self.openFile)
+
+        self.playButton = QPushButton()
+        self.playButton.setEnabled(False)
+        #self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        #self.playButton.clicked.connect(self.play)
+
+        self.positionSlider = QSlider(Qt.Horizontal)
+        self.positionSlider.setRange(0, 0)
+        #self.positionSlider.sliderMoved.connect(self.setPosition)
+
+        controlLayout = QHBoxLayout()
+        controlLayout.setContentsMargins(0, 0, 0, 0)
+        controlLayout.addWidget(openButton)
+        controlLayout.addWidget(self.playButton)
+        controlLayout.addWidget(self.positionSlider)
+
+        videoWidget = QVideoWidget()
+
+        layout = QVBoxLayout()
+        layout.addWidget(videoWidget)
+        layout.addLayout(controlLayout)
+
+        self.setLayout(layout)
+        
+        self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.mediaPlayer.setVideoOutput(videoWidget)
+        #self.mediaPlayer.stateChanged.connect(self.mediaStateChanged)
+        #self.mediaPlayer.positionChanged.connect(self.positionChanged)
+        #self.mediaPlayer.durationChanged.connect(self.durationChanged)
+
+
 
 
 
