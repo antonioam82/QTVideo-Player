@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.widget.setLayout(self.layout)
-        self.widget.setStyleSheet("background-color : black")
+        #self.widget.setStyleSheet("background-color : black")
         self.setCentralWidget(self.widget)
     
     def play_clicked(self):
