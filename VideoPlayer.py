@@ -9,25 +9,24 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
-VIDEO_PATH = "wild pogo mv.avi"#"city night lights.avi"#"video.avi" # vnideo.avi"
 class MainWindow(QMainWindow):
     
     def __init__(self):
         super().__init__()
-        
+       
         self.widget = QWidget(self)
         self.layout = QVBoxLayout()
         self.bottom_layout = QHBoxLayout()
         
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
-
+        
         self.search_button = QPushButton("Buscar",self)
-        self.play_button = QPushButton("Pausa", self)
+        self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Iniciar", self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
-
+        
         self.seek_slider = QSlider(Qt.Horizontal)
         self.volume_slider = QSlider(Qt.Horizontal)
         self.volume_slider.setRange(0, 100)
@@ -45,7 +44,7 @@ class MainWindow(QMainWindow):
         self.bottom_layout.addWidget(self.stop_button)
         self.bottom_layout.addWidget(self.volume_slider)
         self.layout.addWidget(self.seek_slider)
-        
+
         self.search_button.clicked.connect(self.openFile)
         self.play_button.clicked.connect(self.play_clicked)
         self.stop_button.clicked.connect(self.stop_clicked)
@@ -59,8 +58,6 @@ class MainWindow(QMainWindow):
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
-        
-        self.media_player.play()
     
     def play_clicked(self):
         if (self.media_player.state() in
@@ -89,17 +86,15 @@ class MainWindow(QMainWindow):
 
     def openFile(self):
         print("Done")
-        fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')#QDir.homePath())
+        fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
-            print(fileName)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
             self.media_player.setVideoOutput(self.video_widget)
-            #self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_button.setEnabled(True)
             self.stop_button.setEnabled(True)
-    
+        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
