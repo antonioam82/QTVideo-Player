@@ -17,19 +17,19 @@ class MainWindow(QMainWindow):
         self.widget = QWidget(self)
         self.layout = QVBoxLayout()
         self.bottom_layout = QHBoxLayout()
-        
+
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
         #self.media_player.setMedia(
             #QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
         #self.media_player.setVideoOutput(self.video_widget)
-        
+
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Iniciar", self)
         self.title_label = QLabel("VIDEO:",self)
         self.title_label.setStyleSheet("background-color : gold")
-        self.title_label.setFixedWidth(160)
+        self.title_label.setFixedWidth(190)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
 
@@ -48,20 +48,16 @@ class MainWindow(QMainWindow):
         self.bottom_layout.addWidget(self.search_button)
         self.bottom_layout.addWidget(self.title_label)
         
-        
         self.bottom_layout.addWidget(self.play_button)
         self.bottom_layout.addWidget(self.stop_button)
         self.bottom_layout.addWidget(self.volume_slider)
-        
         self.layout.addWidget(self.seek_slider)
 
         self.search_button.clicked.connect(self.openFile)
         self.play_button.clicked.connect(self.play_clicked)
         self.stop_button.clicked.connect(self.stop_clicked)
         self.media_player.stateChanged.connect(self.state_changed)
-        
-        # Se utiliza installEventFilter() para capturar eventos
-        # del mouse en el control de video.
+
         self.video_widget.installEventFilter(self)
         
         self.setWindowTitle("Reproductor de video")
@@ -102,7 +98,7 @@ class MainWindow(QMainWindow):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')#QDir.homePath())
         if fileName != '':
             videoName = fileName.split("/")[-1]
-            self.title_label.setText(videoName)
+            self.title_label.setText('VIDEO: {}'.format(videoName))
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
@@ -115,3 +111,4 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
+    
