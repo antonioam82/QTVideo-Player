@@ -5,7 +5,7 @@ from functools import partial
 from PyQt5.QtCore import QEvent, QUrl, Qt
 from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
                              QWidget, QPushButton, QSlider,
-                             QVBoxLayout, QFileDialog)
+                             QVBoxLayout, QFileDialog, QLabel)
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
@@ -24,9 +24,12 @@ class MainWindow(QMainWindow):
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Iniciar", self)
+        self.title_label = QLabel("",self)
+        self.title_label.setStyleSheet("background-color : orange")
+        self.title_label.setFixedWidth(160)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
-
+        
         self.seek_slider = QSlider(Qt.Horizontal)
         self.volume_slider = QSlider(Qt.Horizontal)
         self.volume_slider.setRange(0, 100)
@@ -36,22 +39,25 @@ class MainWindow(QMainWindow):
         self.media_player.positionChanged.connect(self.seek_slider.setValue)
         self.media_player.durationChanged.connect(
             partial(self.seek_slider.setRange, 0))
-
+        
         self.layout.addWidget(self.video_widget)
         self.layout.addLayout(self.bottom_layout)
         self.bottom_layout.addWidget(self.search_button)
+        self.bottom_layout.addWidget(self.title_label)
+        
         self.bottom_layout.addWidget(self.play_button)
         self.bottom_layout.addWidget(self.stop_button)
         self.bottom_layout.addWidget(self.volume_slider)
+        
         self.layout.addWidget(self.seek_slider)
 
         self.search_button.clicked.connect(self.openFile)
         self.play_button.clicked.connect(self.play_clicked)
         self.stop_button.clicked.connect(self.stop_clicked)
         self.media_player.stateChanged.connect(self.state_changed)
-
+        
         self.video_widget.installEventFilter(self)
-
+        
         self.setWindowTitle("Reproductor de video")
         self.resize(800, 600)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -89,6 +95,7 @@ class MainWindow(QMainWindow):
         print("Done")
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')#QDir.homePath())
         if fileName != '':
+            self.title_label.setText('')
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
