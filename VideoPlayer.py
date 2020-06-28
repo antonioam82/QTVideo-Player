@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
         self.title_label = QLabel("",self)
         self.title_label.setStyleSheet("background-color : gold")
         self.title_label.setFixedWidth(190)
+        self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
 
