@@ -52,6 +52,7 @@ class MainWindow(QMainWindow):
         
         self.bottom_layout.addWidget(self.play_button)
         self.bottom_layout.addWidget(self.stop_button)
+        self.bottom_layout.addWidget(self.volume_label)
         self.bottom_layout.addWidget(self.volume_slider)
         self.layout.addWidget(self.seek_slider)
 
