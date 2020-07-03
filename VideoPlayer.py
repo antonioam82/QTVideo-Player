@@ -64,8 +64,6 @@ class MainWindow(QMainWindow):
         self.media_player.stateChanged.connect(self.state_changed)
 
         self.video_widget.installEventFilter(self)
-        ####label2.setFont(QtGui.QFont("Sanserif", 20))
-        #
         self.setWindowTitle("Reproductor de video")
         self.resize(800, 600)
         self.layout.setContentsMargins(0, 0, 0, 0)
