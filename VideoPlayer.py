@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.stop_button = QPushButton("Iniciar", self)
         #self.title_label = QLabel("VIDEO:",self)
         self.title_label = QLabel("",self)
-        self.tittle_label.setStyleSheet('QLabel {background-color: black; color: green;}')
+        self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         #self.title_label.setStyleSheet("background-color : gold")
         self.title_label.setFixedWidth(190)
         self.volume_label = QLabel("VOLUMEN:",self)
