@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
                              QVBoxLayout, QFileDialog, QLabel)
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5 import QtGui
 
 class MainWindow(QMainWindow):
     
