@@ -29,7 +29,8 @@ class MainWindow(QMainWindow):
         self.stop_button = QPushButton("Iniciar", self)
         #self.title_label = QLabel("VIDEO:",self)
         self.title_label = QLabel("",self)
-        self.title_label.setStyleSheet("background-color : gold")
+        self.tittle_label.setStyleSheet('QLabel {background-color: black; color: green;}')
+        #self.title_label.setStyleSheet("background-color : gold")
         self.title_label.setFixedWidth(190)
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
@@ -62,7 +63,8 @@ class MainWindow(QMainWindow):
         self.media_player.stateChanged.connect(self.state_changed)
 
         self.video_widget.installEventFilter(self)
-        
+        ####label2.setFont(QtGui.QFont("Sanserif", 20))
+        #
         self.setWindowTitle("Reproductor de video")
         self.resize(800, 600)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -113,5 +115,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+sys.exit(app.exec_())
+
     
