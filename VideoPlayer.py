@@ -21,9 +21,6 @@ class MainWindow(QMainWindow):
 
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
-        #self.media_player.setMedia(
-            #QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
-        #self.media_player.setVideoOutput(self.video_widget)
 
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
