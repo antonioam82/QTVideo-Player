@@ -94,10 +94,10 @@ class MainWindow(QMainWindow):
 
     def openFile(self):
         print("Done")
-        fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')#QDir.homePath())
+        fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
             videoName = fileName.split("/")[-1]
-            
+            #self.title_label.setText('VIDEO: {}'.format(videoName))
             self.title_label.setText(videoName)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
