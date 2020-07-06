@@ -40,8 +40,7 @@ class MainWindow(QMainWindow):
         self.seek_slider.sliderMoved.connect(self.media_player.setPosition)
         self.volume_slider.sliderMoved.connect(self.media_player.setVolume)
         self.media_player.positionChanged.connect(self.seek_slider.setValue)
-        self.media_player.durationChanged.connect(
-            partial(self.seek_slider.setRange, 0))
+        self.media_player.durationChanged.connect(partial(self.seek_slider.setRange, 0))
 
         self.layout.addWidget(self.video_widget)
         self.layout.addLayout(self.bottom_layout)
