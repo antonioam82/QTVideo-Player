@@ -47,7 +47,6 @@ class MainWindow(QMainWindow):
         
         self.bottom_layout.addWidget(self.search_button)
         self.bottom_layout.addWidget(self.title_label)
-        
         self.bottom_layout.addWidget(self.play_button)
         self.bottom_layout.addWidget(self.stop_button)
         self.bottom_layout.addWidget(self.volume_label)
