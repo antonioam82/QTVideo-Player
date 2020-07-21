@@ -44,6 +44,7 @@ class MainWindow(QMainWindow):
 
         self.layout.addWidget(self.video_widget)
         self.layout.addLayout(self.bottom_layout)
+        
         self.bottom_layout.addWidget(self.search_button)
         self.bottom_layout.addWidget(self.title_label)
         
