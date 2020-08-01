@@ -27,7 +27,8 @@ class MainWindow(QMainWindow):
         self.stop_button = QPushButton("Iniciar", self)
         self.title_label = QLabel("",self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
-        self.title_label.setFixedWidth(190)
+        #self.title_label.setStyleSheet("background-color : gold")
+        self.title_label.setFixedWidth(220)
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
@@ -78,7 +79,7 @@ class MainWindow(QMainWindow):
     
     def state_changed(self, newstate):
         states = {
-            QMediaPlayer.PausedState: "Resumir",
+            QMediaPlayer.PausedState: "Continuar",
             QMediaPlayer.PlayingState: "Pausa",
             QMediaPlayer.StoppedState: "Reproducir"
         }
@@ -96,7 +97,7 @@ class MainWindow(QMainWindow):
         if fileName != '':
             videoName = fileName.split("/")[-1]
             #self.title_label.setText('VIDEO: {}'.format(videoName))
-            self.title_label.setText(videoName)
+            self.title_label.setText('VIDEO: '+videoName)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
