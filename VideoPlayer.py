@@ -96,8 +96,7 @@ class MainWindow(QMainWindow):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
             videoName = fileName.split("/")[-1]
-            #self.title_label.setText('VIDEO: {}'.format(videoName))
-            self.title_label.setText('VIDEO: '+videoName)
+            self.title_label.setText(' VIDEO: {}'.format(videoName))
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
@@ -110,5 +109,6 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
 sys.exit(app.exec_())##
+
 
     
