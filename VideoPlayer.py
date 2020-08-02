@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
 
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
-        self.stop_button = QPushButton("Iniciar", self)
+        self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         #self.title_label.setStyleSheet("background-color : gold")
