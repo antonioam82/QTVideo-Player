@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
@@ -75,10 +74,11 @@ class MainWindow(QMainWindow):
 
     def move_text(self):
         if self.text != "":
-            lista = self.text.split(" ")
+            #lista = self.text.split(" ")
+            lista = list(self.text)
             dele = lista.pop(0)
             lista.append(dele)
-            tf = " ".join(lista)
+            tf = "".join(lista)
             self.title_label.setText(tf)
             self.text = tf
         
@@ -115,7 +115,7 @@ class MainWindow(QMainWindow):
         if fileName != '':
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
-            self.text = "-"+self.videoName+"-"+self.videoName+"-"
+            self.text = "--"+self.videoName+"--"+self.videoName
             #self.title_label.setText(' VIDEO: {}'.format(self.videoName))
             if self.active_timer == False:
                 timer.timeout.connect(self.move_text)
