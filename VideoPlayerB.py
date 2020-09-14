@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         #self.title_label.setAlignment(QtCore.Qt.AlignRight)
         #self.title_label.setStyleSheet("background-color : gold")
-        self.title_label.setFixedWidth(150)
+        #self.title_label.setFixedWidth(150)
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
@@ -115,7 +115,7 @@ class MainWindow(QMainWindow):
         if fileName != '':
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
-            self.text = "--"+self.videoName+"--"+self.videoName
+            self.text = "-"+self.videoName+"-"
             #self.title_label.setText(' VIDEO: {}'.format(self.videoName))
             if self.active_timer == False:
                 timer.timeout.connect(self.move_text)
