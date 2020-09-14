@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
@@ -69,6 +70,8 @@ class MainWindow(QMainWindow):
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
 
+        self.active_timer = False
+
 
     def move_text(self):
         if self.text != "":
@@ -76,7 +79,6 @@ class MainWindow(QMainWindow):
             dele = lista.pop(0)
             lista.append(dele)
             tf = " ".join(lista)
-            print(tf)
             self.title_label.setText(tf)
             self.text = tf
         
@@ -91,6 +93,7 @@ class MainWindow(QMainWindow):
     
     def stop_clicked(self):
         self.media_player.stop()
+        print("okk")
     
     def state_changed(self, newstate):
         states = {
@@ -114,8 +117,10 @@ class MainWindow(QMainWindow):
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"+self.videoName+"-"
             #self.title_label.setText(' VIDEO: {}'.format(self.videoName))
-            timer.timeout.connect(self.move_text)
-            timer.start(650)
+            if self.active_timer == False:
+                timer.timeout.connect(self.move_text)
+                self.active_timer = True
+                timer.start(650)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
