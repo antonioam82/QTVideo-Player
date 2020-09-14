@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
@@ -10,7 +9,7 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
                              QVBoxLayout, QFileDialog, QLabel)
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5 import QtGui, QtCore
+#from PyQt5 import QtGui, QtCore
 
 
 class MainWindow(QMainWindow):
@@ -70,17 +69,12 @@ class MainWindow(QMainWindow):
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
 
-        #self.text = self.videoName
-
 
     def move_text(self):
         if self.text != "":
             lista = self.text.split(" ")
-            #print(lista)
             dele = lista.pop(0)
-            #print(dele)
             lista.append(dele)
-            #print(lista)
             tf = " ".join(lista)
             print(tf)
             self.title_label.setText(tf)
@@ -118,10 +112,10 @@ class MainWindow(QMainWindow):
         if fileName != '':
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
-            self.text = " "+self.videoName+" "+self.videoName+" "
+            self.text = "-"+self.videoName+"-"+self.videoName+"-"
             #self.title_label.setText(' VIDEO: {}'.format(self.videoName))
             timer.timeout.connect(self.move_text)
-            timer.start(500)
+            timer.start(650)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
