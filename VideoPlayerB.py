@@ -74,12 +74,7 @@ class MainWindow(QMainWindow):
 
 
     def move_text(self):
-        print("ok")
-        
-        #c = 0
         if self.text != "":
-            
-            
             lista = self.text.split(" ")
             #print(lista)
             dele = lista.pop(0)
