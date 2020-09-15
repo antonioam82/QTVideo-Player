@@ -2,15 +2,13 @@
 # -*- coding: utf-8 -*-
 import sys
 from functools import partial
-
 from PyQt5.QtCore import QEvent, QUrl, Qt, QTimer, QTime
 from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
                              QWidget, QPushButton, QSlider,
                              QVBoxLayout, QFileDialog, QLabel)
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-#from PyQt5 import QtGui, QtCore
-
+from PyQt5 import QtGui, QtCore
 
 class MainWindow(QMainWindow):
     
@@ -20,7 +18,6 @@ class MainWindow(QMainWindow):
         self.widget = QWidget(self)
         self.layout = QVBoxLayout()
         self.bottom_layout = QHBoxLayout()
-        #self.videoName = "_"
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
 
@@ -28,9 +25,11 @@ class MainWindow(QMainWindow):
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
+        self.time_label = QLabel("00:00:00",self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
-        #self.title_label.setAlignment(QtCore.Qt.AlignRight)
-        #self.title_label.setStyleSheet("background-color : gold")
+        self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
+        self.time_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.time_label.setFixedWidth(68)
         #self.title_label.setFixedWidth(150)
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
@@ -50,6 +49,7 @@ class MainWindow(QMainWindow):
         
         self.bottom_layout.addWidget(self.search_button)
         self.bottom_layout.addWidget(self.title_label)
+        self.bottom_layout.addWidget(self.time_label)
         self.bottom_layout.addWidget(self.play_button)
         self.bottom_layout.addWidget(self.stop_button)
         self.bottom_layout.addWidget(self.volume_label)
@@ -74,7 +74,6 @@ class MainWindow(QMainWindow):
 
     def move_text(self):
         if self.text != "":
-            #lista = self.text.split(" ")
             lista = list(self.text)
             dele = lista.pop(0)
             lista.append(dele)
@@ -86,14 +85,12 @@ class MainWindow(QMainWindow):
     def play_clicked(self):
         if (self.media_player.state() in
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
-            print("Lets go")
             self.media_player.play()
         else:
             self.media_player.pause()
     
     def stop_clicked(self):
         self.media_player.stop()
-        print("okk")
     
     def state_changed(self, newstate):
         states = {
@@ -110,13 +107,11 @@ class MainWindow(QMainWindow):
         return False
 
     def openFile(self):
-        print("Done")
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
-            #self.title_label.setText(' VIDEO: {}'.format(self.videoName))
             if self.active_timer == False:
                 timer.timeout.connect(self.move_text)
                 self.active_timer = True
