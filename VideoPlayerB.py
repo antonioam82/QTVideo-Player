@@ -107,7 +107,12 @@ class MainWindow(QMainWindow):
     def stop_clicked(self):
         self.media_player.stop()
         self.timeCounting = False
-    
+        self.min = 0
+        self.sec = 0
+        self.hrs = 0
+        self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+        
+        
     def state_changed(self, newstate):
         states = {
             QMediaPlayer.PausedState: "Continuar",
@@ -151,8 +156,6 @@ class MainWindow(QMainWindow):
             self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
             self.sec+=1
 
-            
-        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
