@@ -21,11 +21,15 @@ class MainWindow(QMainWindow):
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
 
+        self.min = 0
+        self.sec = 0
+        self.hrs = 0
+
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        self.time_label = QLabel("00:00:00",self)
+        self.time_label = QLabel("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -34,6 +38,7 @@ class MainWindow(QMainWindow):
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
+        self.timeCounting = False
 
         self.seek_slider = QSlider(Qt.Horizontal)
         self.volume_slider = QSlider(Qt.Horizontal)
@@ -69,6 +74,11 @@ class MainWindow(QMainWindow):
         self.widget.setLayout(self.layout)
         self.setCentralWidget(self.widget)
 
+        timer2 = QTimer(self)
+        
+        timer2.timeout.connect(self.displayTime)
+        timer2.start(1000)        
+
         self.active_timer = False
 
 
@@ -85,9 +95,13 @@ class MainWindow(QMainWindow):
     def play_clicked(self):
         if (self.media_player.state() in
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
+            self.timeCounting = True
             self.media_player.play()
+            
+            
         else:
             self.media_player.pause()
+            self.timeCounting = False
     
     def stop_clicked(self):
         self.media_player.stop()
@@ -122,6 +136,20 @@ class MainWindow(QMainWindow):
             self.media_player.setVideoOutput(self.video_widget)
             self.play_button.setEnabled(True)
             self.stop_button.setEnabled(True)
+
+    def displayTime(self):
+        print("Activate")
+        print(self.timeCounting)
+        if self.timeCounting == True:
+            self.sec+=1
+            if self.sec == 60:
+                self.min += 1
+                self.sec = 0
+            if self.min == 60:
+                self.hrs += 1
+                self.min = 0
+
+            self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
