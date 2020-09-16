@@ -97,6 +97,7 @@ class MainWindow(QMainWindow):
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
             self.timeCounting = True
             self.media_player.play()
+            #self.timeCounting = False
             
             
         else:
@@ -105,6 +106,7 @@ class MainWindow(QMainWindow):
     
     def stop_clicked(self):
         self.media_player.stop()
+        self.timeCounting = False
     
     def state_changed(self, newstate):
         states = {
@@ -139,17 +141,17 @@ class MainWindow(QMainWindow):
 
     def displayTime(self):
         print("Activate")
-        print(self.timeCounting)
         if self.timeCounting == True:
-            self.sec+=1
             if self.sec == 60:
                 self.min += 1
                 self.sec = 0
             if self.min == 60:
                 self.hrs += 1
                 self.min = 0
-
             self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+            self.sec+=1
+
+            
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
