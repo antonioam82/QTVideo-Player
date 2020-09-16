@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        self.time_label = QLabel("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+        self.time_label = QLabel("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
         self.min = 0
         self.sec = 0
         self.hrs = 0
-        self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+        self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
         self.timeCounting = False
         
         
@@ -146,6 +146,11 @@ class MainWindow(QMainWindow):
             self.play_button.setEnabled(True)
             self.stop_button.setEnabled(True)
 
+    def form(self,n):
+        if n<10:
+            n="0"+str(n)
+        return n
+
     def displayTime(self):
         if self.timeCounting == True:
             if self.sec == 60:
@@ -161,9 +166,9 @@ class MainWindow(QMainWindow):
                 self.sec = 0
                 self.hrs = 0
             else:
-                self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+                self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
                 self.sec+=1
-       
+                
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
