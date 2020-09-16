@@ -97,20 +97,17 @@ class MainWindow(QMainWindow):
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
             self.timeCounting = True
             self.media_player.play()
-            #self.timeCounting = False
-            
+            print(self.media_player.state())
             
         else:
             self.media_player.pause()
+            print(self.media_player.state())
             self.timeCounting = False
     
     def stop_clicked(self):
+        print(self.media_player.state())
         self.media_player.stop()
         self.timeCounting = False
-        self.min = 0
-        self.sec = 0
-        self.hrs = 0
-        self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
         
         
     def state_changed(self, newstate):
@@ -120,7 +117,8 @@ class MainWindow(QMainWindow):
             QMediaPlayer.StoppedState: "Reproducir"
         }
         self.play_button.setText(states[newstate])
-        self.stop_button.setEnabled(newstate != QMediaPlayer.StoppedState)
+        self.stop_button.setEnabled(newstate != QMediaPlayer.StoppedState)         
+            
     
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonDblClick:
@@ -145,7 +143,6 @@ class MainWindow(QMainWindow):
             self.stop_button.setEnabled(True)
 
     def displayTime(self):
-        print("Activate")
         if self.timeCounting == True:
             if self.sec == 60:
                 self.min += 1
@@ -153,9 +150,17 @@ class MainWindow(QMainWindow):
             if self.min == 60:
                 self.hrs += 1
                 self.min = 0
+
             self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
             self.sec+=1
+            if self.media_player.state() == 0:
+                self.timeCounting = False
+                self.min = 0
+                self.sec = 0
+                self.hrs = 0                
 
+            
+        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
