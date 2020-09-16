@@ -107,6 +107,10 @@ class MainWindow(QMainWindow):
     def stop_clicked(self):
         print(self.media_player.state())
         self.media_player.stop()
+        self.min = 0
+        self.sec = 0
+        self.hrs = 0
+        self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
         self.timeCounting = False
         
         
@@ -134,7 +138,7 @@ class MainWindow(QMainWindow):
             if self.active_timer == False:
                 timer.timeout.connect(self.move_text)
                 self.active_timer = True
-                timer.start(650)
+                timer.start(650)#650
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
@@ -150,17 +154,16 @@ class MainWindow(QMainWindow):
             if self.min == 60:
                 self.hrs += 1
                 self.min = 0
-
-            self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
-            self.sec+=1
+            
             if self.media_player.state() == 0:
                 self.timeCounting = False
                 self.min = 0
                 self.sec = 0
-                self.hrs = 0                
-
-            
-        
+                self.hrs = 0
+            else:
+                self.time_label.setText("{}:{}:{}".format(self.hrs,self.min,self.sec,self))
+                self.sec+=1
+       
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
