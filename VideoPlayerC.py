@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
 
         self.video_widget.installEventFilter(self)
         self.setWindowTitle("Reproductor de video")
-        self.resize(800, 600)
+        self.resize(800, 520)#600
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.widget.setLayout(self.layout)
