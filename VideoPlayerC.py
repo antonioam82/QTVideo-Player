@@ -21,15 +21,15 @@ class MainWindow(QMainWindow):
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
 
-        self.min = 0
-        self.sec = 0
-        self.hrs = 0
+        #self.min = 0
+        #self.sec = 0
+        #self.hrs = 0
 
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        self.time_label = QLabel("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
+        self.time_label = QLabel('00:00:00',self)#("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -132,6 +132,9 @@ class MainWindow(QMainWindow):
     def openFile(self):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
+            self.min = 0
+            self.sec = 0
+            self.hrs = 0
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
