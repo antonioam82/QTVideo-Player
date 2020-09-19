@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         self.media_player.stateChanged.connect(self.state_changed)
 
         self.video_widget.installEventFilter(self)
-        self.setWindowTitle("Reproductor de video")
+        self.setWindowTitle("Reproductor de video (.avi)")
         self.resize(800, 515)#600
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
