@@ -20,11 +20,7 @@ class MainWindow(QMainWindow):
         self.bottom_layout = QHBoxLayout()
         self.video_widget = QVideoWidget(self)
         self.media_player = QMediaPlayer()
-
-        #self.min = 0
-        #self.sec = 0
-        #self.hrs = 0
-
+        
         self.search_button = QPushButton("Buscar",self)
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
@@ -135,9 +131,6 @@ class MainWindow(QMainWindow):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
             self.restart_counter()
-            #self.min = 0
-            #self.sec = 0
-            #self.hrs = 0
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
@@ -169,9 +162,6 @@ class MainWindow(QMainWindow):
             if self.media_player.state() == 0:
                 self.timeCounting = False
                 self.restart_counter()
-                #self.min = 0
-                #self.sec = 0
-                #self.hrs = 0
             else:
                 self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
                 self.sec+=1
