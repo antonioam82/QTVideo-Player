@@ -105,7 +105,6 @@ class MainWindow(QMainWindow):
             self.timeCounting = False
     
     def stop_clicked(self):
-        #print(self.media_player.state())
         self.media_player.stop()
         self.restart_counter()###########
         self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
