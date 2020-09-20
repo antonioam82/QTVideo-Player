@@ -81,7 +81,11 @@ class MainWindow(QMainWindow):
 
         self.active_timer = False
 
-
+    def restart_counter(self):
+        self.min = 0
+        self.sec = 0
+        self.hrs = 0
+        
     def move_text(self):
         if self.text != "":
             lista = list(self.text)
@@ -105,11 +109,9 @@ class MainWindow(QMainWindow):
             self.timeCounting = False
     
     def stop_clicked(self):
-        print(self.media_player.state())
+        #print(self.media_player.state())
         self.media_player.stop()
-        self.min = 0
-        self.sec = 0
-        self.hrs = 0
+        self.restart_counter()###########
         self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
         self.timeCounting = False
         
@@ -132,9 +134,10 @@ class MainWindow(QMainWindow):
     def openFile(self):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
-            self.min = 0
-            self.sec = 0
-            self.hrs = 0
+            self.restart_counter()
+            #self.min = 0
+            #self.sec = 0
+            #self.hrs = 0
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
@@ -165,9 +168,10 @@ class MainWindow(QMainWindow):
             
             if self.media_player.state() == 0:
                 self.timeCounting = False
-                self.min = 0
-                self.sec = 0
-                self.hrs = 0
+                self.restart_counter()
+                #self.min = 0
+                #self.sec = 0
+                #self.hrs = 0
             else:
                 self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
                 self.sec+=1
