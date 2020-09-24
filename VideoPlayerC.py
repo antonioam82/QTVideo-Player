@@ -97,11 +97,11 @@ class MainWindow(QMainWindow):
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
             self.timeCounting = True
             self.media_player.play()
-            print(self.media_player.state())
+            #print(self.media_player.state())
             
         else:
             self.media_player.pause()
-            print(self.media_player.state())
+            #print(self.media_player.state())
             self.timeCounting = False
     
     def stop_clicked(self):
@@ -151,12 +151,15 @@ class MainWindow(QMainWindow):
 
     def displayTime(self):
         if self.timeCounting == True:
+            
+            current = self.media_player.position()
             if self.sec == 60:
                 self.min += 1
                 self.sec = 0
             if self.min == 60:
                 self.hrs += 1
                 self.min = 0
+            print(current)
             
             if self.media_player.state() == 0:
                 self.timeCounting = False
@@ -170,3 +173,6 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
 sys.exit(app.exec_())
+
+#current = self.media_player.position()
+#print(current)
