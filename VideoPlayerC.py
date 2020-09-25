@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QMainWindow,
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5 import QtGui, QtCore
+import datetime
 
 class MainWindow(QMainWindow):
     
@@ -35,6 +36,7 @@ class MainWindow(QMainWindow):
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
         self.timeCounting = False
+        self.timeClock = '00:00:00'
 
         self.seek_slider = QSlider(Qt.Horizontal)
         self.volume_slider = QSlider(Qt.Horizontal)
@@ -150,27 +152,15 @@ class MainWindow(QMainWindow):
         return n
 
     def displayTime(self):
-        if self.timeCounting == True:
-            
-            current = self.media_player.position()
-            self.sec = int(current/1000)
-            self.min = int(current/60000)
-            self.hrs = int(current/360000)
-            self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
-            if self.sec == 60:
-                #self.min += 1
-                self.sec = 0
-            if self.min == 60:
-                #self.hrs += 1
-                self.min = 0
-            #print(current)
-            
-            #if self.media_player.state() == 0:
-                #self.timeCounting = False
-                #self.restart_counter()
-            #else:
-                #self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
-                #self.sec+=1
+        #if self.timeCounting == True:
+        current = self.media_player.position()
+         
+        self.timeClock = str(datetime.timedelta(seconds=int(current/1000)))
+        time_parts = self.timeClock.split(":")
+        if int(time_parts[0]) < 10:
+            self.time_label.setText("0"+self.timeClock)
+        else:
+            self.time_label.setText(self.timeClock)
                 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
