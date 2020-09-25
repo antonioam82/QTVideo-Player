@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         timer2 = QTimer(self)
         
         timer2.timeout.connect(self.displayTime)
-        timer2.start(1000)        
+        timer2.start(100)     
 
         self.active_timer = False
         
