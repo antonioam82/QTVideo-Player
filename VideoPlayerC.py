@@ -153,26 +153,27 @@ class MainWindow(QMainWindow):
         if self.timeCounting == True:
             
             current = self.media_player.position()
+            self.sec = int(current/1000)
+            self.min = int(current/60000)
+            self.hrs = int(current/360000)
+            self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
             if self.sec == 60:
-                self.min += 1
+                #self.min += 1
                 self.sec = 0
             if self.min == 60:
-                self.hrs += 1
+                #self.hrs += 1
                 self.min = 0
-            print(current)
+            #print(current)
             
-            if self.media_player.state() == 0:
-                self.timeCounting = False
-                self.restart_counter()
-            else:
-                self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
-                self.sec+=1
+            #if self.media_player.state() == 0:
+                #self.timeCounting = False
+                #self.restart_counter()
+            #else:
+                #self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
+                #self.sec+=1
                 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
 sys.exit(app.exec_())
-
-#current = self.media_player.position()
-#print(current)
