@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
-        self.timeCounting = False
+        #self.timeCounting = False
         self.timeClock = '00:00:00'
 
         self.seek_slider = QSlider(Qt.Horizontal)
@@ -78,11 +78,6 @@ class MainWindow(QMainWindow):
         timer2.start(1000)        
 
         self.active_timer = False
-
-    def restart_counter(self):
-        self.min = 0
-        self.sec = 0
-        self.hrs = 0
         
     def move_text(self):
         if self.text != "":
@@ -97,20 +92,20 @@ class MainWindow(QMainWindow):
     def play_clicked(self):
         if (self.media_player.state() in
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
-            self.timeCounting = True
+            #self.timeCounting = True
             self.media_player.play()
             #print(self.media_player.state())
             
         else:
             self.media_player.pause()
             #print(self.media_player.state())
-            self.timeCounting = False
+            #self.timeCounting = False
     
     def stop_clicked(self):
         self.media_player.stop()
-        self.restart_counter()###########
-        self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
-        self.timeCounting = False
+        #self.restart_counter()###########
+        #self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
+        #self.timeCounting = False
         
         
     def state_changed(self, newstate):
@@ -131,7 +126,7 @@ class MainWindow(QMainWindow):
     def openFile(self):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
-            self.restart_counter()
+            #self.restart_counter()
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
@@ -145,11 +140,6 @@ class MainWindow(QMainWindow):
             self.media_player.setVideoOutput(self.video_widget)
             self.play_button.setEnabled(True)
             self.stop_button.setEnabled(True)
-
-    def form(self,n):
-        if n<10:
-            n="0"+str(n)
-        return n
 
     def displayTime(self):
         #if self.timeCounting == True:
