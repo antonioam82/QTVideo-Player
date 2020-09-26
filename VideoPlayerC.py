@@ -26,17 +26,16 @@ class MainWindow(QMainWindow):
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        self.time_label = QLabel('00:00:00',self)#("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
+        self.timeClock = '00:00:00'
+        self.time_label = QLabel(self.timeClock,self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
         self.time_label.setFixedWidth(68)
-        #self.title_label.setFixedWidth(150)
         self.volume_label = QLabel("VOLUMEN:",self)
         self.play_button.setEnabled(False)
         self.stop_button.setEnabled(False)
-        #self.timeCounting = False
-        self.timeClock = '00:00:00'
+        
 
         self.seek_slider = QSlider(Qt.Horizontal)
         self.volume_slider = QSlider(Qt.Horizontal)
@@ -66,7 +65,7 @@ class MainWindow(QMainWindow):
 
         self.video_widget.installEventFilter(self)
         self.setWindowTitle("Reproductor de video (.avi)")
-        self.resize(800, 515)#600
+        self.resize(800, 515)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.widget.setLayout(self.layout)
@@ -92,20 +91,14 @@ class MainWindow(QMainWindow):
     def play_clicked(self):
         if (self.media_player.state() in
             (QMediaPlayer.PausedState, QMediaPlayer.StoppedState)):
-            #self.timeCounting = True
             self.media_player.play()
-            #print(self.media_player.state())
             
         else:
             self.media_player.pause()
-            #print(self.media_player.state())
-            #self.timeCounting = False
-    
+
+            
     def stop_clicked(self):
         self.media_player.stop()
-        #self.restart_counter()###########
-        #self.time_label.setText("{}:{}:{}".format(self.form(self.hrs),self.form(self.min),self.form(self.sec),self))
-        #self.timeCounting = False
         
         
     def state_changed(self, newstate):
@@ -126,14 +119,13 @@ class MainWindow(QMainWindow):
     def openFile(self):
         fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
         if fileName != '':
-            #self.restart_counter()
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
             self.text = "-"+self.videoName+"-"
             if self.active_timer == False:
                 timer.timeout.connect(self.move_text)
                 self.active_timer = True
-                timer.start(650)#650
+                timer.start(650)
             VIDEO_PATH = fileName
             self.media_player.setMedia(
             QMediaContent(QUrl.fromLocalFile(VIDEO_PATH)))
@@ -142,7 +134,6 @@ class MainWindow(QMainWindow):
             self.stop_button.setEnabled(True)
 
     def displayTime(self):
-        #if self.timeCounting == True:
         current = self.media_player.position()
          
         self.timeClock = str(datetime.timedelta(seconds=int(current/1000)))
