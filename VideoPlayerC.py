@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
     def state_changed(self, newstate):
         states = {
             QMediaPlayer.PausedState: "Continuar",
-            QMediaPlayer.PlayingState: "Pausa",
+            QMediaPlayer.PlayingState: "Pausar",
             QMediaPlayer.StoppedState: "Reproducir"
         }
         self.play_button.setText(states[newstate])
