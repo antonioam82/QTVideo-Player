@@ -26,8 +26,9 @@ class MainWindow(QMainWindow):
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        self.timeClock = '00:00:00'
-        self.time_label = QLabel(self.timeClock,self)
+        #self.timeClock = '00:00:00'
+        self.current = 0
+        self.time_label = QLabel('',self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
         self.time_label.setStyleSheet('QLabel {background-color: black; color: red;}')
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -74,7 +75,8 @@ class MainWindow(QMainWindow):
         timer2 = QTimer(self)
         
         timer2.timeout.connect(self.displayTime)
-        timer2.start(100)     
+        
+        timer2.start(100)
 
         self.active_timer = False
         
@@ -134,15 +136,15 @@ class MainWindow(QMainWindow):
             self.stop_button.setEnabled(True)
 
     def displayTime(self):
-        current = self.media_player.position()
-         
-        self.timeClock = str(datetime.timedelta(seconds=int(current/1000)))
+        self.current = self.media_player.position()
+        self.timeClock = str(datetime.timedelta(seconds=int(self.current/1000)))
         time_parts = self.timeClock.split(":")
         if int(time_parts[0]) < 10:
             self.time_label.setText("0"+self.timeClock)
         else:
             self.time_label.setText(self.timeClock)
-                
+
+        
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
