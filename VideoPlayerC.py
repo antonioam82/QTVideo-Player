@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
         self.play_button = QPushButton("Iniciar Vídeo", self)
         self.stop_button = QPushButton("Volver al principio", self)
         self.title_label = QLabel("",self)
-        #self.timeClock = '00:00:00'
         self.current = 0
         self.time_label = QLabel('',self)
         self.title_label.setStyleSheet('QLabel {background-color: black; color: green;}')
