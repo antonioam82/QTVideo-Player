@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
 from functools import partial
@@ -119,7 +119,7 @@ class MainWindow(QMainWindow):
         return False
 
     def openFile(self):
-        fileName,_ = QFileDialog.getOpenFileName(self, "Archivo de video", '/home')
+        fileName,_ = QFileDialog.getOpenFileName(self,"Archivo de video", "/home","AVI files (*.avi)")
         if fileName != '':
             timer = QTimer(self)
             self.videoName = fileName.split("/")[-1]
